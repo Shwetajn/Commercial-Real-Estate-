@@ -419,7 +419,7 @@ export default function MeetingsPage() {
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-right mt-1">{tempNotes.length} chars</p>
               <div className="flex justify-end gap-2 mt-4">
                 <Button variant="ghost" onClick={() => setShowEditNotes(false)}>Cancel</Button>
-                <Button onClick={saveNotes} className="bg-indigo-600 hover:bg-indigo-700">Save Notes</Button>
+                <Button onClick={saveNotes} className="bg-primary hover:bg-primary/90">Save Notes</Button>
               </div>
             </Card>
           </div>
@@ -517,7 +517,7 @@ export default function MeetingsPage() {
 
               <div className="flex justify-end gap-2 border-t border-slate-100 pt-4">
                 <Button variant="ghost" onClick={() => setShowSchedule(false)}>Cancel</Button>
-                <Button disabled={!newMeetingForm.date || !newMeetingForm.time || !newMeetingForm.purpose} onClick={saveNewMeeting} className="bg-indigo-600 hover:bg-indigo-700">
+                <Button disabled={!newMeetingForm.date || !newMeetingForm.time || !newMeetingForm.purpose} onClick={saveNewMeeting} className="bg-primary hover:bg-primary/90">
                   Save Meeting
                 </Button>
               </div>

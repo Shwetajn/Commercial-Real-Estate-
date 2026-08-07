@@ -178,7 +178,7 @@ function DeckGenContent() {
               <Button 
                 onClick={handlePromptSubmit}
                 disabled={!promptText.trim()}
-                className="absolute bottom-4 right-4 h-10 w-10 rounded-full bg-indigo-600 hover:bg-indigo-700 p-0 shadow-md"
+                className="absolute bottom-4 right-4 h-10 w-10 bg-primary hover:bg-primary/90 p-0 shadow-md"
               >
                 <Send className="h-4 w-4" />
               </Button>
@@ -324,7 +324,7 @@ function DeckGenContent() {
 
                   <div className="flex justify-end gap-2 pt-2">
                     <Button variant="ghost" onClick={() => setSuccessModalOpen(false)}>Cancel</Button>
-                    <Button disabled={!selectedLeadId} onClick={handleSendDeck} className="bg-indigo-600 hover:bg-indigo-700">
+                    <Button disabled={!selectedLeadId} onClick={handleSendDeck} className="bg-primary hover:bg-primary/90">
                       Send Deck <Mail className="h-4 w-4 ml-2" />
                     </Button>
                   </div>
@@ -463,7 +463,7 @@ function DeckGenContent() {
            <Button 
             onClick={handleGeneratePreview} 
             disabled={generating || selectedProps.length === 0} 
-            className="w-full bg-indigo-600 hover:bg-indigo-700 h-11"
+            className="w-full bg-primary hover:bg-primary/90 h-11"
           >
             {generating ? 'Generating...' : 'Generate Deck'}
           </Button>

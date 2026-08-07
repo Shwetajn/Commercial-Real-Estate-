@@ -304,7 +304,7 @@ export default function SignalDetailPage({ params }: { params: { id: string } })
 
             <div className="flex justify-end gap-3 pt-2 border-t border-slate-100 mt-6 pt-4">
               <Button variant="ghost" onClick={() => setShowConvertModal(false)} className="font-semibold h-10 px-5">Cancel</Button>
-              <Button onClick={handleConvert} className="bg-indigo-600 hover:bg-indigo-700 font-semibold h-10 px-6">
+              <Button onClick={handleConvert} className="bg-primary hover:bg-primary/90 font-semibold h-10 px-6">
                 Create Lead
               </Button>
             </div>

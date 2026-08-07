@@ -528,7 +528,7 @@ export default function PropertyDetailPage() {
               <Button className="w-full justify-start" onClick={() => router.push('/supply/status-management')}>
                 Update Unit Status
               </Button>
-              <Button variant="outline" className="w-full justify-start" onClick={() => router.push('/supply/task-management')}>
+              <Button variant="outline" className="w-full justify-start" onClick={() => router.push(`/supply/inventory/${property.id}/tasks`)}>
                 View Assigned Tasks
               </Button>
             </div>

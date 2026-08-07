@@ -281,7 +281,7 @@ export default function IntegrationDetailPage() {
           <button className="px-4 py-2 bg-white border border-slate-200 text-slate-700 font-semibold rounded-xl text-sm hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-2">
             <Activity className="h-4 w-4" /> Test Connection
           </button>
-          <button onClick={handleSave} className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-xl text-sm hover:bg-indigo-700 transition-colors shadow-sm">
+          <button onClick={handleSave} className="px-4 py-2 bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm">
             Save Configuration
           </button>
         </div>

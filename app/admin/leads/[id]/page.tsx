@@ -273,7 +273,7 @@ export default function LeadDetailPage({ params }: { params: { id: string } }) {
               <button 
                 onClick={handleAssignSubmit}
                 disabled={!selectedManager}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Assign & Verify
               </button>

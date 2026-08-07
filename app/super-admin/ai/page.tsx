@@ -78,7 +78,7 @@ export default function AIControlCenterPage() {
               </div>
 
               <div className="pt-4 border-t border-slate-100">
-                <button className="w-full py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors shadow-sm">
+                <button className="w-full py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm">
                   Save Configuration
                 </button>
               </div>

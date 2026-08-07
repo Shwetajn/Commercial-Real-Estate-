@@ -619,3 +619,34 @@ mockLeads.push({
   createdAt: new Date(Date.now() - 60 * 86400000).toISOString(),
   updatedAt: new Date(Date.now() - 10 * 86400000).toISOString()
 });
+
+
+mockProperties.forEach((p, i) => {
+  // Only add if tasks don't already exist to prevent infinite duplicates on reload
+  if (!mockTasks.find(t => t.id === `tsk_auto_${i}_1`)) {
+    mockTasks.push({
+      id: `tsk_auto_${i}_1`,
+      taskName: `Verify legal documents for ${p.name}`,
+      taskType: 'Internal',
+      description: 'Ensure all property documents are up to date in the central repository.',
+      relatedEntity: { type: 'Property', id: p.id, name: p.name },
+      assignedBy: 'Admin',
+      priority: 'Medium',
+      dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+      status: 'Open',
+      history: []
+    },
+    {
+      id: `tsk_auto_${i}_2`,
+      taskName: `Coordinate site visit at ${p.name}`,
+      taskType: 'Meeting',
+      description: 'Client visit scheduled for next week. Arrange access cards.',
+      relatedEntity: { type: 'Property', id: p.id, name: p.name },
+      assignedBy: 'System',
+      priority: 'High',
+      dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+      status: 'In Progress',
+      history: []
+    });
+  }
+});

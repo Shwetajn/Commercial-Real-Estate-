@@ -312,7 +312,7 @@ export default function SalesTasksPage() {
 
             <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
               <Button variant="ghost" onClick={() => setShowAddTask(false)} className="font-semibold h-10 px-5 text-slate-500 hover:text-slate-900">Cancel</Button>
-              <Button onClick={submitNewTask} className="bg-indigo-600 hover:bg-indigo-700 font-semibold h-10 px-6">
+              <Button onClick={submitNewTask} className="bg-primary hover:bg-primary/90 font-semibold h-10 px-6">
                 Create Task
               </Button>
             </div>

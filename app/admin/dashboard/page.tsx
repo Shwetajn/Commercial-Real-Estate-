@@ -480,7 +480,7 @@ export default function AdminDashboardPage() {
               </div>
 
               <div className="flex flex-col gap-2 pt-4">
-                <button className="w-full py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
+                <button className="w-full py-2.5 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
                   <Calendar className="h-4 w-4" /> Schedule Call
                 </button>
                 <button className="w-full py-2.5 bg-white border border-slate-200 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">

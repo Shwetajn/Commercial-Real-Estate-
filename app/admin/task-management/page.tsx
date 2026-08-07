@@ -254,7 +254,7 @@ export default function TaskManagementPage() {
               <button 
                 onClick={handleCreateTask}
                 disabled={!newTask.title || !newTask.assignedTo}
-                className="px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                className="px-6 py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
               >
                 Create Task
               </button>

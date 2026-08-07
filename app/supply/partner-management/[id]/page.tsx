@@ -53,7 +53,7 @@ export default function PartnerDetailPage() {
               <Edit className="h-4 w-4 mr-2" /> Edit Partner
             </Button>
             {partner.type !== 'Broker' && (
-              <Button className="bg-indigo-600 hover:bg-indigo-700">
+              <Button className="bg-primary hover:bg-primary/90">
                 <Plus className="h-4 w-4 mr-2" /> Add Property
               </Button>
             )}

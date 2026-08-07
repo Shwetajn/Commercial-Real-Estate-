@@ -364,7 +364,7 @@ export default function PropertyDetailPage({ params }: { params: { id: string } 
               </div>
               <div className="flex justify-end gap-2">
                 <Button variant="ghost" onClick={() => setShowRequestInfo(false)} className="font-semibold">Cancel</Button>
-                <Button disabled={!requestForm.message} onClick={handleSubmitRequest} className="bg-indigo-600 hover:bg-indigo-700 font-bold px-6">Submit Request</Button>
+                <Button disabled={!requestForm.message} onClick={handleSubmitRequest} className="bg-primary hover:bg-primary/90 font-bold px-6">Submit Request</Button>
               </div>
             </Card>
           </div>

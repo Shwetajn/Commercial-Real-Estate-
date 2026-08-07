@@ -98,7 +98,7 @@ export default function LoginPage() {
         </div>
       </div>
       {error && <p className="text-sm font-medium text-red-600">{error}</p>}
-      <button type="submit" className="w-full h-11 font-semibold text-base inline-flex items-center justify-center rounded-md bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors" disabled={isLoading || !employeeId || !password}>
+      <button type="submit" className="w-full h-11 font-semibold text-base inline-flex items-center justify-center bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors" disabled={isLoading || !employeeId || !password}>
         {isLoading ? "Authenticating..." : "Continue"} <ArrowRight className="h-4 w-4 ml-2" />
       </button>
     </form>
@@ -126,7 +126,7 @@ export default function LoginPage() {
         />
       </div>
       {error && <p className="text-sm font-medium text-red-600 text-center">{error}</p>}
-      <button type="submit" className="w-full h-11 font-semibold text-base inline-flex items-center justify-center rounded-md bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors" disabled={isLoading || otp.length < 6}>
+      <button type="submit" className="w-full h-11 font-semibold text-base inline-flex items-center justify-center bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors" disabled={isLoading || otp.length < 6}>
         {isLoading ? "Verifying..." : "Verify"} <ShieldCheck className="h-4 w-4 ml-2" />
       </button>
       <div className="text-center flex justify-between">

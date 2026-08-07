@@ -154,7 +154,7 @@ export default function StatusManagementLanding() {
                       Updated recently
                     </div>
                     <Button 
-                      className="w-full bg-indigo-600 hover:bg-indigo-700 shadow-sm"
+                      className="w-full bg-primary hover:bg-primary/90 shadow-sm"
                       onClick={() => router.push(`/supply/status-management/${property.id}`)}
                     >
                       View Status <ArrowRight className="ml-2 h-4 w-4" />

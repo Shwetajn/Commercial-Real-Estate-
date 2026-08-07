@@ -28,7 +28,7 @@
     --popover-foreground: 222 47% 11%; /* slate-900 */
     
     /* Primary: Indigo */
-    --primary: 230 40% 45%; /* muted enterprise indigo */
+    --primary: 245 82% 60%; /* Vibrant Purple-Blue */
     --primary-foreground: 210 40% 98%; /* slate-50 */
     
     /* Secondary/Muted: Slate */
@@ -57,7 +57,7 @@
     /* Borders & Inputs */
     --border: 214 32% 91%; /* slate-200 */
     --input: 214 32% 91%; /* slate-200 */
-    --ring: 230 40% 45%; /* muted enterprise indigo */
+    --ring: 245 82% 60%; /* muted enterprise indigo */
     
     --radius: 0.5rem; /* rounded-md base */
   }
@@ -74,7 +74,7 @@
     --popover-foreground: 210 40% 98%; /* slate-50 */
     
     /* Primary: Indigo */
-    --primary: 230 40% 60%; /* muted enterprise indigo dark */
+    --primary: 245 82% 70%; /* muted enterprise indigo dark */
     --primary-foreground: 210 40% 98%; /* slate-50 */
     
     /* Secondary/Muted: Slate */
@@ -103,7 +103,7 @@
     /* Borders & Inputs */
     --border: 217 33% 17%; /* slate-800 */
     --input: 217 33% 17%; /* slate-800 */
-    --ring: 243 75% 59%; /* indigo-500 */
+    --ring: 245 82% 70%; /* indigo-500 */
   }
   
   * {

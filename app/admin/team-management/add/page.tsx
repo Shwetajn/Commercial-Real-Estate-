@@ -207,7 +207,7 @@ export default function AddEmployeePage() {
               </div>
               <div className="flex justify-between pt-4">
                 <Button variant="ghost" onClick={() => setCurrentStep(2)} className="font-semibold text-slate-500">Back</Button>
-                <Button disabled={!formData.region || (formData.role.includes('Executive') && !formData.reportingManagerId)} onClick={generateCredentials} className="bg-indigo-600 hover:bg-indigo-700 font-bold px-8">Generate Credentials</Button>
+                <Button disabled={!formData.region || (formData.role.includes('Executive') && !formData.reportingManagerId)} onClick={generateCredentials} className="bg-primary hover:bg-primary/90 font-bold px-8">Generate Credentials</Button>
               </div>
             </div>
           )}

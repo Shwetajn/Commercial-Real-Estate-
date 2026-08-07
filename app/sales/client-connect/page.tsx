@@ -303,7 +303,7 @@ export default function ClientConnectPage() {
                   </div>
                   <p className="text-sm text-indigo-900/80 mb-3 leading-relaxed">{aiSuggestionText}</p>
                   <div className="flex gap-2">
-                    <Button size="sm" className="h-7 bg-indigo-600 hover:bg-indigo-700 text-xs font-bold px-4" onClick={() => { setComposerText(aiSuggestionText); setShowAiSuggestion(false); }}>
+                    <Button size="sm" className="h-7 bg-primary hover:bg-primary/90 text-xs font-bold px-4" onClick={() => { setComposerText(aiSuggestionText); setShowAiSuggestion(false); }}>
                       Use Reply
                     </Button>
                     <Button size="sm" variant="outline" className="h-7 border-indigo-200 text-indigo-700 hover:bg-indigo-100 text-xs font-bold px-4" onClick={handleGenerateAiReply}>
@@ -342,7 +342,7 @@ export default function ClientConnectPage() {
                 <Button 
                   onClick={handleSendMessage} 
                   disabled={!composerText.trim()}
-                  className="h-12 w-12 rounded-xl shrink-0 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+                  className="h-12 w-12 shrink-0 bg-primary hover:bg-primary/90 disabled:opacity-50"
                 >
                   <Send className="h-5 w-5" />
                 </Button>

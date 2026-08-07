@@ -42,7 +42,7 @@ export default function UserDetailPage({ params }: { params: { id: string } }) {
           <button className="inline-flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm text-red-600 hover:text-red-700 hover:bg-red-50">
             <PowerOff className="h-4 w-4" /> {user.status === 'Active' ? 'Disable User' : 'Activate User'}
           </button>
-          <button className="inline-flex items-center gap-2 px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors shadow-sm">
+          <button className="inline-flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm">
             <Edit className="h-4 w-4" /> Edit User
           </button>
         </div>

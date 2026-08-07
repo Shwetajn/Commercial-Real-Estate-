@@ -319,7 +319,7 @@ export default function PartnerManagementPage() {
             
             <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-3">
               <Button variant="ghost" onClick={() => setShowAddModal(false)}>Cancel</Button>
-              <Button onClick={handleSavePartner} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6">
+              <Button onClick={handleSavePartner} className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold px-6">
                 Save Partner
               </Button>
             </div>

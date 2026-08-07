@@ -318,7 +318,7 @@ export default function LeadManagementPage() {
               <button 
                 onClick={handleBulkAssign}
                 disabled={!selectedManager}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Assign {selectedLeads.length} Leads
               </button>
@@ -353,7 +353,7 @@ export default function LeadManagementPage() {
               </button>
               <button 
                 onClick={handleImport}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors"
+                className="px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
               >
                 Simulate Import
               </button>
@@ -592,7 +592,7 @@ export default function LeadManagementPage() {
                 {leadWizardStep > 1 ? 'Back' : 'Cancel'}
               </button>
               {leadWizardStep === 2 && (
-                <button onClick={handleAddLead} className="px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors">
+                <button onClick={handleAddLead} className="px-6 py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
                   Create Lead
                 </button>
               )}

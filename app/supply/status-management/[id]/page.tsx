@@ -390,7 +390,7 @@ export default function PropertyStatusDashboard() {
             </div>
             <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-2">
               <Button variant="ghost" onClick={() => setSelectedUnit(null)}>Cancel</Button>
-              <Button onClick={handleUpdateStatus} className="bg-indigo-600 hover:bg-indigo-700 font-bold">Save Status</Button>
+              <Button onClick={handleUpdateStatus} className="bg-primary hover:bg-primary/90 font-bold">Save Status</Button>
             </div>
           </div>
         </div>

@@ -367,7 +367,7 @@ export default function AddLeadPage() {
         <Button variant="outline" onClick={step === 1 ? () => router.push('/sales/leads') : handlePrev} className="px-6 h-11">
           {step === 1 ? 'Cancel' : 'Back'}
         </Button>
-        <Button onClick={step === 4 ? handleSubmit : handleNext} className="bg-indigo-600 hover:bg-indigo-700 px-8 h-11 font-bold">
+        <Button onClick={step === 4 ? handleSubmit : handleNext} className="bg-primary hover:bg-primary/90 px-8 h-11 font-bold">
           {step === 4 ? 'Submit Lead' : 'Next Step'} <ArrowRight className="h-4 w-4 ml-2" />
         </Button>
       </div>

@@ -297,7 +297,7 @@ export default function AddPropertyPage() {
                       <Layers className="h-12 w-12 text-slate-300 mx-auto mb-4" />
                       <h3 className="text-lg font-bold text-slate-900">No Towers Added</h3>
                       <p className="text-slate-500 text-sm mt-1 max-w-sm mx-auto mb-6">Start by adding a tower to this property to configure its floors and office units.</p>
-                      <Button onClick={addTower} className="rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-sm"><Plus className="h-4 w-4 mr-2" /> Add First Tower</Button>
+                      <Button onClick={addTower} className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-sm"><Plus className="h-4 w-4 mr-2" /> Add First Tower</Button>
                     </div>
                   ) : (
                     <div className="space-y-6">

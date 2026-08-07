@@ -94,7 +94,7 @@ export default function AdminTaskDetailPage() {
           </div>
           <div className="flex gap-3 shrink-0">
             {task.status === 'Open' && (
-              <Button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold" onClick={() => handleStatusChange('In Progress')}>
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" onClick={() => handleStatusChange('In Progress')}>
                 Start Task
               </Button>
             )}
@@ -172,7 +172,7 @@ export default function AdminTaskDetailPage() {
                     />
                   </div>
                   <Button 
-                    className="h-10 px-4 bg-indigo-600 hover:bg-indigo-700 rounded-lg shrink-0"
+                    className="h-10 px-4 bg-primary hover:bg-primary/90 shrink-0"
                     disabled={!commentText.trim()}
                     onClick={handleAddComment}
                   >

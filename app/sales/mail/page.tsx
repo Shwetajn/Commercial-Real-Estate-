@@ -340,7 +340,7 @@ export default function MailManagementPage() {
                 <Button variant="outline" onClick={handleReject} className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700">
                   <XCircle className="h-4 w-4 mr-2" /> Reject
                 </Button>
-                <Button onClick={handleApproveAndSend} className="bg-indigo-600 hover:bg-indigo-700">
+                <Button onClick={handleApproveAndSend} className="bg-primary hover:bg-primary/90">
                   <CheckCircle2 className="h-4 w-4 mr-2" /> Approve & Send
                 </Button>
               </div>

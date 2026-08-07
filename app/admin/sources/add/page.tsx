@@ -198,7 +198,7 @@ export default function AddLeadSourcePage() {
         <button 
           onClick={handleAddChannel}
           disabled={!name || !type}
-          className="px-6 py-3 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 shadow-sm"
+          className="px-6 py-3 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 shadow-sm"
         >
           Add Channel
         </button>

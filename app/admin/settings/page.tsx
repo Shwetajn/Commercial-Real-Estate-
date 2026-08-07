@@ -118,7 +118,7 @@ export default function SettingsPage() {
                 </div>
                 
                 <div className="pt-4 flex justify-end">
-                  <button className="px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors">
+                  <button className="px-6 py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors">
                     Save Changes
                   </button>
                 </div>
@@ -218,7 +218,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="pt-4 flex justify-end">
-                  <button className="px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors shadow-sm">
+                  <button className="px-6 py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm">
                     Save Changes
                   </button>
                 </div>
@@ -300,7 +300,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="pt-4 flex justify-end">
-                  <button className="px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition-colors shadow-sm">
+                  <button className="px-6 py-2 bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors shadow-sm">
                     Save Changes
                   </button>
                 </div>
