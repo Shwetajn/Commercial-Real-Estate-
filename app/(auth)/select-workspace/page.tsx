@@ -119,17 +119,6 @@ export default function SelectWorkspacePage() {
           </button>
         </div>
 
-        <div className="text-center mt-8">
-          <button 
-            onClick={() => {
-              useAppStore.getState().logout();
-              router.push('/login');
-            }} 
-            className="text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors uppercase tracking-widest"
-          >
-            Log Out Completely
-          </button>
-        </div>
 
         {/* TOAST */}
         {showToast && (
