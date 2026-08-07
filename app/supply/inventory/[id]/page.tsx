@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Building, AlertCircle, MapPin, CheckCircle2, FileText, Activity as ActivityIcon, Save, ChevronDown, Edit2, ChevronRight, MoreHorizontal, ExternalLink } from "lucide-react";
+import { ArrowLeft, Building, AlertCircle, MapPin, CheckCircle2, FileText, Activity as ActivityIcon, Save, ChevronDown, Edit2, ChevronRight, MoreHorizontal, ExternalLink, Plus, Trash2 } from "lucide-react";
 import { PropertyLifecycleStatus, UnitStatus, Property } from "@/types";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
@@ -13,7 +13,7 @@ import { useState } from "react";
 export default function PropertyDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const { properties, updateProperty, updateUnitStatus } = useAppStore();
+  const { properties, updateProperty, updateUnitStatus, deleteTower, deleteFloor, deleteUnit } = useAppStore();
   
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<Partial<Property>>({});
@@ -83,14 +83,14 @@ export default function PropertyDetailPage() {
           <div>
             <div className="flex items-center gap-3 mb-1">
               {isEditing ? (
-                <input type="text" className="text-xl font-bold text-slate-900 bg-transparent border-b border-indigo-200 focus:border-indigo-600 outline-none w-[300px]" value={editData.name || ''} onChange={(e) => setEditData({...editData, name: e.target.value})} />
+                <input type="text" className="text-xl font-bold text-slate-900 bg-transparent border-b border-slate-200 focus:border-slate-600 focus:ring-1 focus:ring-slate-400 outline-none w-[300px]" value={editData.name || ''} onChange={(e) => setEditData({...editData, name: e.target.value})} />
               ) : (
                 <h1 className="text-xl font-bold tracking-tight text-slate-900">{property.name}</h1>
               )}
               <Badge variant={getStatusVariant(property.lifecycleStatus)} className="text-[10px] px-2 py-0.5 shadow-none uppercase tracking-wider">
                 {property.lifecycleStatus}
               </Badge>
-              <Badge className={`text-[10px] px-2 py-0.5 shadow-none uppercase tracking-wider ${property.buildingType === 'Coworking' ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'}`}>
+              <Badge className={`text-[10px] px-2 py-0.5 shadow-none uppercase tracking-wider ${property.buildingType === 'Coworking' ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>
                 {property.buildingType}
               </Badge>
             </div>
@@ -290,68 +290,118 @@ export default function PropertyDetailPage() {
                   </div>
                 ) : (
                   <div className="border border-slate-200 rounded-lg overflow-hidden divide-y divide-slate-200">
-                    {(property.towers || []).map(tower => {
-                      const isTowerExpanded = expandedTowers[tower.id] ?? true;
+                                        {(property.towers || []).map(tower => {
+                      const isTowerExpanded = expandedTowers[tower.id] !== false;
                       return (
-                        <div key={tower.id} className="bg-white">
+                        <div key={tower.id} className="bg-white group/tower">
                           <div 
-                            onClick={() => setExpandedTowers(p => ({...p, [tower.id]: !isTowerExpanded}))}
                             className="px-4 py-3 bg-slate-50 flex items-center justify-between cursor-pointer hover:bg-slate-100 transition-colors"
                           >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2" onClick={() => setExpandedTowers(p => ({...p, [tower.id]: !isTowerExpanded}))}>
                               <ChevronRight className={`h-4 w-4 text-slate-400 transition-transform ${isTowerExpanded ? 'rotate-90' : ''}`} />
                               <h4 className="font-semibold text-slate-900 text-sm">{tower.name}</h4>
+                              <span className="text-xs text-slate-500 font-medium ml-2">{tower.floors.length} Floors</span>
                             </div>
-                            <span className="text-xs text-slate-500 font-medium">{tower.floors.length} Floors</span>
+                            <div className="flex items-center gap-2">
+                              <Button variant="outline" size="sm" className="h-7 text-xs bg-white">
+                                <Plus className="h-3 w-3 mr-1" /> Add Floor
+                              </Button>
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                className="h-7 w-7 p-0 text-slate-400 hover:text-red-600 hover:bg-red-50"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if(window.confirm(`Are you sure you want to delete ${tower.name}? This will remove all Floors and Units inside it.`)) {
+                                    deleteTower(property.id, tower.id);
+                                  }
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
                           </div>
                           
                           {isTowerExpanded && (
-                            <div className="bg-white pb-2 divide-y divide-slate-100">
-                              {tower.floors.map(floor => {
-                                const isFloorExpanded = expandedFloors[floor.id] ?? true;
-                                return (
-                                  <div key={floor.id} className="pl-8 pr-4 py-2">
-                                    <div 
-                                      onClick={() => setExpandedFloors(p => ({...p, [floor.id]: !isFloorExpanded}))}
-                                      className="py-2 flex items-center gap-2 cursor-pointer hover:text-slate-900 text-slate-600 transition-colors"
-                                    >
-                                      <ChevronRight className={`h-3 w-3 transition-transform ${isFloorExpanded ? 'rotate-90' : ''}`} />
-                                      <span className="text-xs font-bold uppercase tracking-widest">Floor {floor.floorNumber}</span>
-                                    </div>
-                                    
-                                    {isFloorExpanded && (
-                                      <div className="pl-5 pt-2 pb-3">
-                                        <table className="w-full text-left text-xs bg-white border border-slate-200 rounded-lg overflow-hidden">
-                                          <thead className="bg-slate-50 border-b border-slate-100 text-slate-400 uppercase tracking-widest">
-                                            <tr>
-                                              <th className="px-3 py-2 font-bold">Unit</th>
-                                              <th className="px-3 py-2 font-bold">Area</th>
-                                              <th className="px-3 py-2 font-bold">Seats</th>
-                                              <th className="px-3 py-2 font-bold">Status</th>
-                                              <th className="px-3 py-2 text-right">Actions</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody className="divide-y divide-slate-100 text-slate-600">
-                                            {floor.units.map(unit => (
-                                              <tr key={unit.id} className="hover:bg-slate-50 transition-colors">
-                                                <td className="px-3 py-2 font-semibold text-slate-900">{unit.unitNumber}</td>
-                                                <td className="px-3 py-2">{unit.area} sqft</td>
-                                                <td className="px-3 py-2">{unit.seatCapacity} seats</td>
-                                                <td className="px-3 py-2">
-                                                  <Badge variant="outline" className={`border-none ${getUnitStatusColor(unit.status)} px-1.5 py-0.5 text-[9px]`}>{unit.status}</Badge>
-                                                </td>
-                                                <td className="px-3 py-2 text-right">
-                                                  <Button variant="outline" size="sm" onClick={() => router.push('/supply/status-management')}>Update Status</Button>
-                                                </td>
-                                              </tr>
-                                            ))}
-                                          </tbody>
-                                        </table>
+                            <div className="bg-white p-4 space-y-4">
+                              {tower.floors.length === 0 ? (
+                                <div className="text-center py-6 text-sm text-slate-500 bg-slate-50 rounded-lg border border-dashed border-slate-200">
+                                  No floors added yet. Click "Add Floor" to get started.
+                                </div>
+                              ) : (
+                                tower.floors.map(floor => {
+                                  const isFloorExpanded = expandedFloors[floor.id] !== false;
+                                  return (
+                                    <div key={floor.id} className="border border-slate-200 rounded-lg overflow-hidden group/floor">
+                                      <div className="bg-slate-50 px-4 py-2.5 flex items-center justify-between border-b border-slate-100 cursor-pointer hover:bg-slate-100/70" onClick={() => setExpandedFloors(p => ({...p, [floor.id]: !isFloorExpanded}))}>
+                                        <div className="flex items-center gap-2">
+                                          <ChevronRight className={`h-3.5 w-3.5 text-slate-400 transition-transform ${isFloorExpanded ? 'rotate-90' : ''}`} />
+                                          <span className="text-xs font-bold uppercase tracking-widest text-slate-700">Floor {floor.floorNumber}</span>
+                                          <span className="text-[10px] text-slate-500 font-medium bg-slate-200/50 px-1.5 py-0.5 rounded ml-2">{floor.units.length} Units</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                          <Button variant="ghost" size="sm" className="h-6 text-xs text-slate-600 hover:text-slate-900 bg-white shadow-sm border border-slate-200" onClick={(e) => { e.stopPropagation(); }}>
+                                            <Plus className="h-3 w-3 mr-1" /> Add Unit
+                                          </Button>
+                                          <Button 
+                                            variant="ghost" 
+                                            size="sm" 
+                                            className="h-6 w-6 p-0 text-slate-400 hover:text-red-600 hover:bg-red-50"
+                                            onClick={(e) => { e.stopPropagation(); deleteFloor(property.id, tower.id, floor.id); }}
+                                          >
+                                            <Trash2 className="h-3.5 w-3.5" />
+                                          </Button>
+                                        </div>
                                       </div>
-                                    )}
-                                  </div>
-                                );
-                              })}
+                                      
+                                      {isFloorExpanded && (
+                                        <div className="bg-white">
+                                          {floor.units.length === 0 ? (
+                                            <div className="text-center py-4 text-xs text-slate-500">
+                                              No units found on this floor.
+                                            </div>
+                                          ) : (
+                                            <table className="w-full text-left text-xs">
+                                              <thead className="bg-white border-b border-slate-100 text-[10px] text-slate-400 uppercase tracking-widest">
+                                                <tr>
+                                                  <th className="px-4 py-2 font-bold w-[20%]">Unit</th>
+                                                  <th className="px-4 py-2 font-bold w-[20%]">Area</th>
+                                                  <th className="px-4 py-2 font-bold w-[15%]">Seats</th>
+                                                  <th className="px-4 py-2 font-bold w-[25%]">Status</th>
+                                                  <th className="px-4 py-2 text-right w-[20%]">Actions</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody className="divide-y divide-slate-100 text-slate-600">
+                                                {floor.units.map(unit => (
+                                                  <tr key={unit.id} className="hover:bg-slate-50/70 transition-colors group/unit">
+                                                    <td className="px-4 py-2.5 font-semibold text-slate-900">{unit.unitNumber}</td>
+                                                    <td className="px-4 py-2.5">{unit.area} sqft</td>
+                                                    <td className="px-4 py-2.5">{unit.seatCapacity} seats</td>
+                                                    <td className="px-4 py-2.5">
+                                                      <Badge variant="outline" className={`border-none px-1.5 py-0.5 text-[9px] shadow-sm bg-white ${unit.status === 'Available' ? 'text-emerald-700' : unit.status === 'Occupied' ? 'text-slate-600' : 'text-amber-700'}`}>{unit.status}</Badge>
+                                                    </td>
+                                                    <td className="px-4 py-2.5 text-right flex items-center justify-end gap-1">
+                                                      <Button variant="ghost" size="sm" className="h-6 text-[10px] text-slate-500 hover:text-slate-900" onClick={() => router.push('/supply/status-management')}>Update</Button>
+                                                      <Button 
+                                                        variant="ghost" 
+                                                        size="sm" 
+                                                        className="h-6 w-6 p-0 text-slate-300 hover:text-red-600 hover:bg-red-50"
+                                                        onClick={() => deleteUnit(property.id, tower.id, floor.id, unit.id)}
+                                                      >
+                                                        <Trash2 className="h-3.5 w-3.5" />
+                                                      </Button>
+                                                    </td>
+                                                  </tr>
+                                                ))}
+                                              </tbody>
+                                            </table>
+                                          )}
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                })
+                              )}
                             </div>
                           )}
                         </div>
@@ -402,7 +452,7 @@ export default function PropertyDetailPage() {
                 <div className="border border-slate-200 rounded-lg p-6 bg-white">
                   <div className="relative space-y-6 before:absolute before:inset-0 before:ml-[1.2rem] before:-translate-x-px before:h-full before:w-0.5 before:bg-slate-200">
                     <div className="relative flex items-start group">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-indigo-50 text-indigo-600 z-10 shrink-0">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-slate-100 text-slate-700 z-10 shrink-0">
                         <ActivityIcon className="h-4 w-4" />
                       </div>
                       <div className="ml-4 bg-white p-4 rounded-lg border border-slate-200 shadow-sm w-full">

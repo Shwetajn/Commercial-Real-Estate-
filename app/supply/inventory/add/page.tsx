@@ -6,7 +6,7 @@ import { useAppStore } from "@/lib/store";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Building2, ArrowRight, ArrowLeft, CheckCircle2, Building, Layers, Trash2, Plus, Users, Armchair, Briefcase } from "lucide-react";
+import { Building2, ArrowRight, ArrowLeft, CheckCircle2, Building, Layers, Trash2, Plus, Users, Armchair, Briefcase, GripVertical } from "lucide-react";
 import { Property, PropertyLifecycleStatus, UnitStatus, WorkspaceType, Tower, CoworkingInventory } from "@/types";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
@@ -17,6 +17,7 @@ export default function AddPropertyPage() {
   const { addProperty, currentUser } = useAppStore();
   
   const [flowType, setFlowType] = useState<FlowType>('selection');
+  const [draggedTowerIdx, setDraggedTowerIdx] = useState<number | null>(null);
   
   // Common State
   const [currentStep, setCurrentStep] = useState(1);
@@ -140,6 +141,12 @@ export default function AddPropertyPage() {
   };
   const removeUnit = (towerId: string, floorId: string, unitId: string) => {
     setTowers(towers.map(t => t.id === towerId ? { ...t, floors: t.floors.map(f => f.id === floorId ? { ...f, units: f.units.filter(u => u.id !== unitId) } : f) } : t));
+  };
+  const removeTower = (towerId: string) => {
+    setTowers(towers.filter(t => t.id !== towerId));
+  };
+  const removeFloor = (towerId: string, floorId: string) => {
+    setTowers(towers.map(t => t.id === towerId ? { ...t, floors: t.floors.filter(f => f.id !== floorId) } : t));
   };
 
   // ---------------------------------------------------------------------------
@@ -306,28 +313,71 @@ export default function AddPropertyPage() {
                   ) : (
                     <div className="space-y-6">
                       {towers.map((tower, tIdx) => (
-                        <div key={tower.id} className="border border-slate-200/60 rounded-2xl bg-white shadow-sm overflow-hidden">
+                        <div 
+                          key={tower.id} 
+                          draggable
+                          onDragStart={() => setDraggedTowerIdx(tIdx)}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={() => {
+                            if (draggedTowerIdx === null || draggedTowerIdx === tIdx) return;
+                            const newTowers = [...towers];
+                            const [moved] = newTowers.splice(draggedTowerIdx, 1);
+                            newTowers.splice(tIdx, 0, moved);
+                            setTowers(newTowers);
+                            setDraggedTowerIdx(null);
+                          }}
+                          className="border border-slate-200/60 rounded-2xl bg-white shadow-sm overflow-hidden group/tower"
+                        >
                           <div className="bg-slate-50/80 px-6 py-4 flex items-center justify-between border-b border-slate-100">
-                            <input className="font-bold text-lg text-slate-900 bg-transparent focus:outline-none focus:border-b-2 border-indigo-600" value={tower.name} onChange={(e) => setTowers(towers.map(t => t.id === tower.id ? {...t, name: e.target.value} : t))} />
-                            <Button variant="ghost" size="sm" onClick={() => addFloor(tower.id)} className="text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 font-semibold h-8 rounded-lg"><Plus className="h-3 w-3 mr-1.5" /> Add Floor</Button>
+                            <div className="flex items-center gap-2">
+                              <div className="cursor-grab hover:bg-slate-100 p-1.5 rounded text-slate-300 hover:text-slate-500 active:cursor-grabbing">
+                                <GripVertical className="h-5 w-5" />
+                              </div>
+                              <input className="font-bold text-lg text-slate-900 bg-white border border-slate-200 rounded-md px-3 py-1.5 focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 w-64 shadow-sm" value={tower.name} onChange={(e) => setTowers(towers.map(t => t.id === tower.id ? {...t, name: e.target.value} : t))} />
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Button variant="ghost" size="sm" onClick={() => addFloor(tower.id)} className="text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 font-semibold h-8 rounded-lg"><Plus className="h-3 w-3 mr-1.5" /> Add Floor</Button>
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                className="h-8 w-8 p-0 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg"
+                                onClick={() => {
+                                  if(window.confirm(`Are you sure you want to delete ${tower.name}? This will remove all Floors and Units inside it.`)) {
+                                    removeTower(tower.id);
+                                  }
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
                           </div>
                           <div className="p-6 space-y-6">
                             {tower.floors.length === 0 ? (
                               <p className="text-sm text-slate-400 text-center py-4 font-medium">No floors added to this tower yet.</p>
                             ) : (
                               tower.floors.map((floor, fIdx) => (
-                                <div key={floor.id} className="border border-slate-100 rounded-xl p-5 bg-slate-50/30">
+                                <div key={floor.id} className="border border-slate-100 rounded-xl p-5 bg-slate-50/30 group/floor">
                                   <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-2">
                                       <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Floor Number</span>
                                       <input className="w-16 rounded-md border border-slate-200 px-2 py-1 text-sm font-semibold text-slate-900 text-center" value={floor.floorNumber} onChange={(e) => setTowers(towers.map(t => t.id === tower.id ? {...t, floors: t.floors.map(f => f.id === floor.id ? {...f, floorNumber: e.target.value} : f)} : t))} />
                                     </div>
-                                    <Button variant="outline" size="sm" onClick={() => addUnit(tower.id, floor.id)} className="h-8 rounded-lg border-slate-200 font-semibold shadow-none"><Plus className="h-3 w-3 mr-1.5" /> Add Unit</Button>
+                                    <div className="flex items-center gap-2">
+                                      <Button variant="outline" size="sm" onClick={() => addUnit(tower.id, floor.id)} className="h-8 rounded-lg border-slate-200 font-semibold shadow-none"><Plus className="h-3 w-3 mr-1.5" /> Add Unit</Button>
+                                      <Button 
+                                        variant="ghost" 
+                                        size="sm" 
+                                        className="h-8 w-8 p-0 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg"
+                                        onClick={() => removeFloor(tower.id, floor.id)}
+                                      >
+                                        <Trash2 className="h-4 w-4" />
+                                      </Button>
+                                    </div>
                                   </div>
                                   
                                   <div className="space-y-3">
                                     {floor.units.map((unit) => (
-                                      <div key={unit.id} className="flex flex-wrap md:flex-nowrap gap-3 items-center bg-white p-3 rounded-lg border border-slate-200/60 shadow-sm">
+                                      <div key={unit.id} className="flex flex-wrap md:flex-nowrap gap-3 items-center bg-white p-3 rounded-lg border border-slate-200/60 shadow-sm group/unit">
                                         <div className="w-full md:w-auto">
                                           <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-1">Unit</label>
                                           <input className="w-full md:w-24 rounded-md border border-slate-200 px-3 py-1.5 text-sm font-semibold" value={unit.unitNumber} onChange={e => updateUnit(tower.id, floor.id, unit.id, 'unitNumber', e.target.value)} />
@@ -348,7 +398,12 @@ export default function AddPropertyPage() {
                                           </select>
                                         </div>
                                         <div className="w-full md:w-auto ml-auto pt-4 md:pt-0">
-                                          <Button variant="ghost" size="icon" onClick={() => removeUnit(tower.id, floor.id, unit.id)} className="h-8 w-8 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-md">
+                                          <Button 
+                                            variant="ghost" 
+                                            size="icon" 
+                                            onClick={() => removeUnit(tower.id, floor.id, unit.id)} 
+                                            className="h-8 w-8 text-slate-300 hover:text-red-600 hover:bg-red-50 rounded-md"
+                                          >
                                             <Trash2 className="h-4 w-4" />
                                           </Button>
                                         </div>

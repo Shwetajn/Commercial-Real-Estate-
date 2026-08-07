@@ -36,6 +36,9 @@ interface AppState {
   updateTaskStatus: (taskId: string, newStatus: TaskStatus, outcome?: string, notes?: string) => void;
   submitPropertyForApproval: (propertyId: string) => void;
   deleteProperty: (propertyId: string) => void;
+  deleteTower: (propertyId: string, towerId: string) => void;
+  deleteFloor: (propertyId: string, towerId: string, floorId: string) => void;
+  deleteUnit: (propertyId: string, towerId: string, floorId: string, unitId: string) => void;
   updateProperty: (propertyId: string, data: Partial<Property>) => void;
   simulateAdminApproval: (propertyId: string) => void;
   simulateAdminRejection: (propertyId: string, reason: string) => void;
@@ -195,6 +198,54 @@ export const useAppStore = create<AppState>((set) => ({
   deleteProperty: (propertyId) =>
     set((state) => ({
       properties: state.properties.filter((p) => p.id !== propertyId),
+    })),
+
+  deleteTower: (propertyId, towerId) =>
+    set((state) => ({
+      properties: state.properties.map((p) =>
+        p.id === propertyId
+          ? { ...p, towers: p.towers.filter((t) => t.id !== towerId) }
+          : p
+      ),
+    })),
+
+  deleteFloor: (propertyId, towerId, floorId) =>
+    set((state) => ({
+      properties: state.properties.map((p) =>
+        p.id === propertyId
+          ? {
+              ...p,
+              towers: p.towers.map((t) =>
+                t.id === towerId
+                  ? { ...t, floors: t.floors.filter((f) => f.id !== floorId) }
+                  : t
+              ),
+            }
+          : p
+      ),
+    })),
+
+  deleteUnit: (propertyId, towerId, floorId, unitId) =>
+    set((state) => ({
+      properties: state.properties.map((p) =>
+        p.id === propertyId
+          ? {
+              ...p,
+              towers: p.towers.map((t) =>
+                t.id === towerId
+                  ? {
+                      ...t,
+                      floors: t.floors.map((f) =>
+                        f.id === floorId
+                          ? { ...f, units: f.units.filter((u) => u.id !== unitId) }
+                          : f
+                      ),
+                    }
+                  : t
+              ),
+            }
+          : p
+      ),
     })),
 
   updateProperty: (propertyId, data) =>
